@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alteram Lifestyle - 24-Month Financial Model</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Alteram Lifestyle Financial Model</h1>
+            <p>24-Month Operational Cost & Revenue Projection | South African Market</p>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="assumptions">Assumptions Hub</div>
+            <div class="tab" data-tab="model">24-Month Model</div>
+            <div class="tab" data-tab="dashboard">Dashboard</div>
+            <div class="tab" data-tab="scenarios">Scenarios</div>
+        </div>
+        
+        <div id="assumptions" class="tab-content active">
+            <div class="tab-header">
+                <h2>Assumptions Hub - Control Panel</h2>
+                <button class="print-btn" onclick="printTab('assumptions')">📄 Print PDF</button>
+            </div>
+            <div class="assumptions-grid">
+                <div class="assumption-section">
+                    <h3>Growth & Volume Parameters</h3>
+                    <div class="input-group">
+                        <label>Quarterly Growth Rate (%)</label>
+                        <input type="number" id="quarterlyGrowth" value="15" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Starting Monthly Transactions</label>
+                        <input type="number" id="startingTransactions" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label>Average Order Value (ZAR)</label>
+                        <input type="number" id="averageOrderValue" value="3000">
+                    </div>
+                    <div class="input-group">
+                        <label>Customer Service: Customers per FTE</label>
+                        <input type="number" id="customersPerFTE" value="500">
+                    </div>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Revenue Parameters</h3>
+                    <div class="input-group">
+                        <label>KhulaPay Platform Fee (%)</label>
+                        <input type="number" id="khulaPayFee" value="2.5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>SharePay Service Fee (%)</label>
+                        <input type="number" id="sharePayFee" value="2.0" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>EasyNow Interest Rate (% annual)</label>
+                        <input type="number" id="easyNowRate" value="24" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>FlexLine Interest Rate (% annual)</label>
+                        <input type="number" id="flexLineRate" value="22" step="0.1">
+                    </div>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Product Mix (%)</h3>
+                    <div class="input-group">
+                        <label>KhulaPay (Lay-By)</label>
+                        <input type="number" id="khulaPayMix" value="40" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label>SharePay (Social)</label>
+                        <input type="number" id="sharePayMix" value="15" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label>EasyNow (BNPL)</label>
+                        <input type="number" id="easyNowMix" value="30" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label>FlexLine (Credit)</label>
+                        <input type="number" id="flexLineMix" value="15" step="1">
+                    </div>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Phase 1: Setup & Launch (M1-6)</h3>
+                    <div class="input-group">
+                        <label>Compliance Oversight Salary (ZAR/month)</label>
+                        <input type="number" id="complianceOversightSalary" value="25000">
+                    </div>
+                    <div class="input-group">
+                        <label>Admin Assistant Salary (ZAR/month)</label>
+                        <input type="number" id="adminAssistantSalary" value="15000">
+                    </div>
+                    <div class="input-group">
+                        <label>White-label Platform SaaS (ZAR/month)</label>
+                        <input type="number" id="saasSubscriptionMonthly" value="8000">
+                    </div>
+                    <div class="input-group">
+                        <label>Hosting & Security P1 (ZAR/month)</label>
+                        <input type="number" id="hostingSecurityP1Monthly" value="3000">
+                    </div>
+                    <div class="input-group">
+                        <label>NCR Licence Fees (ZAR, one-off)</label>
+                        <input type="number" id="ncrLicenceOneoff" value="1800">
+                    </div>
+                    <div class="input-group">
+                        <label>Legal Setup & Contracts (ZAR, one-off)</label>
+                        <input type="number" id="legalSetupOneoff" value="7500">
+                    </div>
+                    <div class="input-group">
+                        <label>Incorporation Costs (ZAR, one-off)</label>
+                        <input type="number" id="incorporationOneoff" value="175">
+                    </div>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Phase 2: Market Entry (M7-18)</h3>
+                    <div class="input-group">
+                        <label>Credit Committee Member Stipend (ZAR/month each)</label>
+                        <input type="number" id="creditCommitteeMemberStipend" value="5000">
+                    </div>
+                    <div class="input-group">
+                        <label>Customer Service Agent Salary (ZAR/month)</label>
+                        <input type="number" id="csAgentSalary" value="12000">
+                    </div>
+                    <div class="input-group">
+                        <label>CS Agents Count (Phase 2)</label>
+                        <input type="number" id="csAgentsCountP2" value="2">
+                    </div>
+                    <div class="input-group">
+                        <label>Bureau Check Cost (ZAR per check)</label>
+                        <input type="number" id="unitCostBureauCheck" value="60">
+                    </div>
+                    <div class="input-group">
+                        <label>API Query Cost (ZAR per query)</label>
+                        <input type="number" id="unitCostApiQuery" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label>Scoring Query Cost (ZAR per query)</label>
+                        <input type="number" id="unitCostScoringQuery" value="8">
+                    </div>
+                    <div class="input-group">
+                        <label>Collections Case Cost (ZAR per case)</label>
+                        <input type="number" id="unitCostCollectionsCase" value="500">
+                    </div>
+                    <div class="input-group">
+                        <label>Notification Cost (ZAR per notification)</label>
+                        <input type="number" id="unitCostNotification" value="0.25">
+                    </div>
+                    <div class="input-group">
+                        <label>Merchant Success Manager Salary (ZAR/month)</label>
+                        <input type="number" id="merchantSuccessManagerSalary" value="30000">
+                    </div>
+                    <div class="input-group">
+                        <label>Audit & Insurance (ZAR/month)</label>
+                        <input type="number" id="auditInsuranceMonthly" value="4000">
+                    </div>
+                    <div class="input-group">
+                        <label>Office P2 (ZAR/month)</label>
+                        <input type="number" id="officeP2Monthly" value="15000">
+                    </div>
+                    <div class="input-group">
+                        <label>Office IT & Supplies (ZAR/month)</label>
+                        <input type="number" id="officeItSuppliesMonthly" value="2000">
+                    </div>
+                    <div class="input-group">
+                        <label>Marketing Baseline (transactions/month)</label>
+                        <input type="number" id="marketingBaseline" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label>Marketing Unit Cost (ZAR per transaction equivalent)</label>
+                        <input type="number" id="unitCostMarketing" value="150">
+                    </div>
+                    <div class="input-group">
+                        <label>Travel Baseline (trips/month)</label>
+                        <input type="number" id="travelBaseline" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label>Travel Unit Cost (ZAR per trip)</label>
+                        <input type="number" id="unitCostTravel" value="2000">
+                    </div>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Phase 3: Scale (M19-24)</h3>
+                    <div class="input-group">
+                        <label>Collections Department (ZAR/month)</label>
+                        <input type="number" id="collectionsDeptMonthly" value="25000">
+                    </div>
+                    <div class="input-group">
+                        <label>Customer Service P3 (ZAR/month)</label>
+                        <input type="number" id="customerServicePhase3Monthly" value="60000">
+                    </div>
+                    <div class="input-group">
+                        <label>Platform Enhancements (ZAR, one-off)</label>
+                        <input type="number" id="platformEnhancementsOneoff" value="50000">
+                    </div>
+                    <div class="input-group">
+                        <label>Hosting & Security P3 (ZAR/month)</label>
+                        <input type="number" id="hostingSecurityP3Monthly" value="8000">
+                    </div>
+                    <div class="input-group">
+                        <label>Regulatory Reporting & Governance (ZAR/month)</label>
+                        <input type="number" id="regReportingGovMonthly" value="6000">
+                    </div>
+                    <div class="input-group">
+                        <label>Merchant Team (ZAR/month)</label>
+                        <input type="number" id="merchantTeamMonthly" value="45000">
+                    </div>
+                    <div class="input-group">
+                        <label>Office P3 (ZAR/month)</label>
+                        <input type="number" id="officeP3Monthly" value="25000">
+                    </div>
+                    <div class="input-group">
+                        <label>Operational Support (ZAR/month)</label>
+                        <input type="number" id="operationalSupportMonthly" value="8000">
+                    </div>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Volume Drivers</h3>
+                    <div class="input-group">
+                        <label>Starting Volume: API Queries</label>
+                        <input type="number" id="startVolApiQueries" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label>Starting Volume: Scoring Queries</label>
+                        <input type="number" id="startVolScoringQueries" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label>Starting Volume: Bureau Checks</label>
+                        <input type="number" id="startVolBureauChecks" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label>Starting Volume: Collections Cases</label>
+                        <input type="number" id="startVolCollectionsCases" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label>Starting Volume: Notifications</label>
+                        <input type="number" id="startVolNotifications" value="300">
+                    </div>
+                    <div class="input-group">
+                        <label>Payment Processing Rate (%)</label>
+                        <input type="number" id="paymentProcessingRate" value="2.9" step="0.1">
+                    </div>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Risk & Scaling</h3>
+                    <div class="input-group">
+                        <label>General Contingency (%)</label>
+                        <input type="number" id="generalContingency" value="5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Credit Loss Rate (%)</label>
+                        <input type="number" id="creditLossRate" value="3" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Working Capital Buffer (ZAR)</label>
+                        <input type="number" id="workingCapitalBuffer" value="100000">
+                    </div>
+                    <div class="input-group">
+                        <label>Fully Loaded Cost Multiplier</label>
+                        <input type="number" id="fullyLoadedMultiplier" value="1.25" step="0.01">
+                    </div>
+                </div>
+            </div>
+            
+            <button class="update-btn" onclick="updateModel()">Update Model</button>
+            <button class="print-btn" onclick="printCompleteModel()">📄 Print Complete Model</button>
+        </div>
+        
+        <div id="model" class="tab-content">
+            <div class="tab-header">
+                <h2>24-Month Financial Model</h2>
+                <button class="print-btn" onclick="printTab('model')">📄 Print PDF</button>
+            </div>
+            <div class="scrollable-table">
+                <table class="model-table" id="financialModel">
+                    <!-- Model will be generated by JavaScript -->
+                </table>
+            </div>
+        </div>
+        
+        <div id="dashboard" class="tab-content">
+            <div class="tab-header">
+                <h2>Financial Dashboard</h2>
+                <button class="print-btn" onclick="printTab('dashboard')">📄 Print PDF</button>
+            </div>
+            <div class="dashboard" id="dashboardKPIs">
+                <!-- KPIs will be generated by JavaScript -->
+            </div>
+            
+            <h3>Key Metrics Summary</h3>
+            <div class="scrollable-table">
+                <table class="model-table" id="summaryTable">
+                    <!-- Summary will be generated by JavaScript -->
+                </table>
+            </div>
+        </div>
+        
+        <div id="scenarios" class="tab-content">
+            <div class="tab-header">
+                <h2>Scenario Analysis</h2>
+                <button class="print-btn" onclick="printTab('scenarios')">📄 Print PDF</button>
+            </div>
+            <p>Scenario planning functionality - modify assumptions above to see impact</p>
+            
+            <div class="assumptions-grid">
+                <div class="assumption-section">
+                    <h3>Conservative Scenario</h3>
+                    <button class="scenario-btn" onclick="loadScenario('conservative')">Load Conservative</button>
+                    <ul style="font-size: 12px; color: #64748b; margin-top: 10px;">
+                        <li>Growth: 10% quarterly</li>
+                        <li>Lower transaction volumes</li>
+                        <li>Higher contingency buffer</li>
+                    </ul>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Aggressive Growth</h3>
+                    <button class="scenario-btn" onclick="loadScenario('aggressive')">Load Aggressive</button>
+                    <ul style="font-size: 12px; color: #64748b; margin-top: 10px;">
+                        <li>Growth: 25% quarterly</li>
+                        <li>Higher marketing spend</li>
+                        <li>Faster hiring triggers</li>
+                    </ul>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Market Rates</h3>
+                    <button class="scenario-btn" onclick="loadScenario('market')">Load Market Rates</button>
+                    <ul style="font-size: 12px; color: #64748b; margin-top: 10px;">
+                        <li>Growth: 15% quarterly</li>
+                        <li>Market-aligned pricing</li>
+                        <li>Balanced risk approach</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/financial-model.js"></script>
+</body>
+</html>
