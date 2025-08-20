@@ -105,7 +105,7 @@ function addRevenueSection(table) {
         const baseRevenue = monthlyTransactions * avgOrderValue;
         
         const cell = baseRevenueRow.insertCell();
-        cell.textContent = formatNumber(baseRevenue);
+        cell.textContent = formatCurrency(baseRevenue);
         cell.className = 'revenue';
     }
     
@@ -124,7 +124,7 @@ function addRevenueSection(table) {
         const initiationRevenue = newCustomers * initiationFee;
         
         const cell = initiationFeesRow.insertCell();
-        cell.textContent = formatNumber(initiationRevenue);
+        cell.textContent = formatCurrency(initiationRevenue);
         cell.className = 'revenue';
     }
     
@@ -144,7 +144,7 @@ function addRevenueSection(table) {
         const serviceRevenue = existingCustomers * monthlyServiceFee;
         
         const cell = serviceFeesRow.insertCell();
-        cell.textContent = formatNumber(serviceRevenue);
+        cell.textContent = formatCurrency(serviceRevenue);
         cell.className = 'revenue';
     }
     
@@ -163,7 +163,7 @@ function addRevenueSection(table) {
         const commissionRevenue = (monthlyTransactions * avgOrderValue) * merchantCommissionRate;
         
         const cell = merchantCommissionRow.insertCell();
-        cell.textContent = formatNumber(commissionRevenue);
+        cell.textContent = formatCurrency(commissionRevenue);
         cell.className = 'revenue';
     }
     
@@ -188,7 +188,7 @@ function addRevenueSection(table) {
                                (creditTransactions * flexLineMix * avgCreditAmount * flexLineRate);
         
         const cell = interestIncomeRow.insertCell();
-        cell.textContent = formatNumber(interestRevenue);
+        cell.textContent = formatCurrency(interestRevenue);
         cell.className = 'revenue';
     }
     
@@ -208,7 +208,7 @@ function addRevenueSection(table) {
         const penaltyRevenue = monthlyTransactions * lateDefaultRate * (latePaymentPenalty + defaultCharge);
         
         const cell = penaltyChargesRow.insertCell();
-        cell.textContent = formatNumber(penaltyRevenue);
+        cell.textContent = formatCurrency(penaltyRevenue);
         cell.className = 'revenue';
     }
     
@@ -221,7 +221,7 @@ function addRevenueSection(table) {
     for (let month = 1; month <= 24; month++) {
         const revenue = calculateMonthlyRevenue(month);
         const cell = totalRevenueRow.insertCell();
-        cell.textContent = formatNumber(revenue);
+        cell.textContent = formatCurrency(revenue);
         cell.className = 'revenue';
     }
 }
@@ -240,7 +240,7 @@ function addOngoingCostsSection(table) {
     for (let month = 1; month <= 24; month++) {
         const saasCost = (assumptions.saasSubscriptionMonthly || 0);
         const cell = ongoingCostsRow.insertCell();
-        cell.textContent = formatNumber(saasCost);
+        cell.textContent = formatCurrency(saasCost);
         cell.className = 'negative';
     }
 
@@ -251,7 +251,7 @@ function addOngoingCostsSection(table) {
     for (let month = 1; month <= 24; month++) {
         const hostingCost = (assumptions.hostingSecurityP1Monthly || 0);
         const cell = hostingCostsRow.insertCell();
-        cell.textContent = formatNumber(hostingCost);
+        cell.textContent = formatCurrency(hostingCost);
         cell.className = 'negative';
     }
 }
@@ -281,7 +281,7 @@ function addAdditionalCostsSection(table) {
         const costOfCapital = creditTransactions * avgCreditAmount * costOfCapitalRate;
         
         const cell = costOfCapitalRow.insertCell();
-        cell.textContent = formatNumber(costOfCapital);
+        cell.textContent = formatCurrency(costOfCapital);
         cell.className = 'negative';
     }
 
@@ -293,7 +293,7 @@ function addAdditionalCostsSection(table) {
     for (let month = 1; month <= 24; month++) {
         const insuranceCost = (assumptions.creditInsurancePremium || 0);
         const cell = creditInsuranceRow.insertCell();
-        cell.textContent = formatNumber(insuranceCost);
+        cell.textContent = formatCurrency(insuranceCost);
         cell.className = 'negative';
     }
 
@@ -305,7 +305,7 @@ function addAdditionalCostsSection(table) {
     for (let month = 1; month <= 24; month++) {
         const legalCost = (assumptions.legalCollectionsMonthly || 0);
         const cell = legalCollectionsRow.insertCell();
-        cell.textContent = formatNumber(legalCost);
+        cell.textContent = formatCurrency(legalCost);
         cell.className = 'negative';
     }
 
@@ -317,7 +317,7 @@ function addAdditionalCostsSection(table) {
     for (let month = 1; month <= 24; month++) {
         const recoveryCost = (assumptions.recoveryAgencyMonthly || 0);
         const cell = recoveryAgencyRow.insertCell();
-        cell.textContent = formatNumber(recoveryCost);
+        cell.textContent = formatCurrency(recoveryCost);
         cell.className = 'negative';
     }
 
@@ -329,7 +329,7 @@ function addAdditionalCostsSection(table) {
     for (let month = 1; month <= 24; month++) {
         const techCost = (assumptions.enhancedTechMonthly || 0);
         const cell = enhancedTechRow.insertCell();
-        cell.textContent = formatNumber(techCost);
+        cell.textContent = formatCurrency(techCost);
         cell.className = 'negative';
     }
 
@@ -341,7 +341,7 @@ function addAdditionalCostsSection(table) {
     for (let month = 1; month <= 24; month++) {
         const marketingCost = (assumptions.marketingAcquisitionMonthly || 0);
         const cell = marketingAcquisitionRow.insertCell();
-        cell.textContent = formatNumber(marketingCost);
+        cell.textContent = formatCurrency(marketingCost);
         cell.className = 'negative';
     }
 
@@ -353,7 +353,7 @@ function addAdditionalCostsSection(table) {
     for (let month = 1; month <= 24; month++) {
         const complianceCost = (assumptions.complianceRegulatoryMonthly || 0);
         const cell = complianceRegulatoryRow.insertCell();
-        cell.textContent = formatNumber(complianceCost);
+        cell.textContent = formatCurrency(complianceCost);
         cell.className = 'negative';
     }
 
@@ -375,7 +375,7 @@ function addAdditionalCostsSection(table) {
         const creditLosses = creditTransactions * avgCreditAmount * creditLossRate;
         
         const cell = creditLossesRow.insertCell();
-        cell.textContent = formatNumber(creditLosses);
+        cell.textContent = formatCurrency(creditLosses);
         cell.className = 'negative';
     }
 }
@@ -399,7 +399,7 @@ function addCostSection(table, title, startMonth, endMonth) {
         for (let month = 1; month <= 24; month++) {
             const amount = cost.calculate(month, startMonth, endMonth);
             const cell = costRow.insertCell();
-            cell.textContent = formatNumber(amount);
+            cell.textContent = formatCurrency(amount);
             if (amount > 0) cell.className = 'negative';
         }
     });
@@ -416,7 +416,7 @@ function addSummaryRows(table) {
     for (let month = 1; month <= 24; month++) {
         const totalCosts = calculateMonthlyCosts(month);
         const cell = totalCostsRow.insertCell();
-        cell.textContent = formatNumber(totalCosts);
+        cell.textContent = formatCurrency(totalCosts);
         cell.className = 'negative';
     }
     
@@ -431,7 +431,7 @@ function addSummaryRows(table) {
         const costs = calculateMonthlyCosts(month);
         const profit = revenue - costs;
         const cell = netProfitRow.insertCell();
-        cell.textContent = formatNumber(profit);
+        cell.textContent = formatCurrency(profit);
         cell.className = profit >= 0 ? 'currency' : 'negative';
     }
 }
@@ -717,33 +717,33 @@ function generateKPICards() {
         {
             title: 'Phase 1: Setup & Launch',
             subtitle: 'Months 1-3 (Aug-Oct)',
-            revenue: formatNumber(phase1Revenue),
-            costs: formatNumber(phase1Costs),
-            profit: formatNumber(phase1Profit),
+            revenue: formatCurrency(phase1Revenue),
+            costs: formatCurrency(phase1Costs),
+            profit: formatCurrency(phase1Profit),
             status: phase1Profit >= 0 ? 'Positive' : 'Negative'
         },
         {
             title: 'Phase 2: Market Entry',
             subtitle: 'Months 4-6 (Nov-Jan)',
-            revenue: formatNumber(phase2Revenue),
-            costs: formatNumber(phase2Costs),
-            profit: formatNumber(phase2Profit),
+            revenue: formatCurrency(phase2Revenue),
+            costs: formatCurrency(phase2Costs),
+            profit: formatCurrency(phase2Profit),
             status: phase2Profit >= 0 ? 'Positive' : 'Negative'
         },
         {
             title: 'Phase 3: Scale',
             subtitle: 'Months 7-24 (Feb+)',
-            revenue: formatNumber(phase3Revenue),
-            costs: formatNumber(phase3Costs),
-            profit: formatNumber(phase3Profit),
+            revenue: formatCurrency(phase3Revenue),
+            costs: formatCurrency(phase3Costs),
+            profit: formatCurrency(phase3Profit),
             status: phase3Profit >= 0 ? 'Positive' : 'Negative'
         },
         {
             title: 'Total 24-Month',
             subtitle: 'Complete Projection',
-            revenue: formatNumber(phase1Revenue + phase2Revenue + phase3Revenue),
-            costs: formatNumber(phase1Costs + phase2Costs + phase3Costs),
-            profit: formatNumber(phase1Profit + phase2Profit + phase3Profit),
+            revenue: formatCurrency(phase1Revenue + phase2Revenue + phase3Revenue),
+            costs: formatCurrency(phase1Costs + phase2Costs + phase3Costs),
+            profit: formatCurrency(phase1Profit + phase2Profit + phase3Profit),
             status: (phase1Profit + phase2Profit + phase3Profit) >= 0 ? 'Positive' : 'Negative'
         }
     ];
@@ -818,9 +818,9 @@ function generateSummaryTable() {
     phase1Row.className = 'phase-summary-row';
     phase1Row.insertCell(0).textContent = 'Phase 1: Setup & Launch (M1-3)';
     phase1Row.insertCell(0).className = 'row-label phase-label';
-    phase1Row.insertCell(1).textContent = formatNumber(phase1Revenue);
-    phase1Row.insertCell(2).textContent = formatNumber(phase1Costs);
-    phase1Row.insertCell(3).textContent = formatNumber(phase1Profit);
+    phase1Row.insertCell(1).textContent = formatCurrency(phase1Revenue);
+    phase1Row.insertCell(2).textContent = formatCurrency(phase1Costs);
+    phase1Row.insertCell(3).textContent = formatCurrency(phase1Profit);
     phase1Row.insertCell(4).textContent = `${phase1Margin.toFixed(1)}%`;
     
     // Phase 2 Summary
@@ -833,9 +833,9 @@ function generateSummaryTable() {
     phase2Row.className = 'phase-summary-row';
     phase2Row.insertCell(0).textContent = 'Phase 2: Market Entry (M4-6)';
     phase2Row.insertCell(0).className = 'row-label phase-label';
-    phase2Row.insertCell(1).textContent = formatNumber(phase2Revenue);
-    phase2Row.insertCell(2).textContent = formatNumber(phase2Costs);
-    phase2Row.insertCell(3).textContent = formatNumber(phase2Profit);
+    phase2Row.insertCell(1).textContent = formatCurrency(phase2Revenue);
+    phase2Row.insertCell(2).textContent = formatCurrency(phase2Costs);
+    phase2Row.insertCell(3).textContent = formatCurrency(phase2Profit);
     phase2Row.insertCell(4).textContent = `${phase2Margin.toFixed(1)}%`;
     
     // Phase 3 Summary
@@ -848,9 +848,9 @@ function generateSummaryTable() {
     phase3Row.className = 'phase-summary-row';
     phase3Row.insertCell(0).textContent = 'Phase 3: Scale (M7-24)';
     phase3Row.insertCell(0).className = 'row-label phase-label';
-    phase3Row.insertCell(1).textContent = formatNumber(phase3Revenue);
-    phase3Row.insertCell(2).textContent = formatNumber(phase3Costs);
-    phase3Row.insertCell(3).textContent = formatNumber(phase3Profit);
+    phase3Row.insertCell(1).textContent = formatCurrency(phase3Revenue);
+    phase3Row.insertCell(2).textContent = formatCurrency(phase3Costs);
+    phase3Row.insertCell(3).textContent = formatCurrency(phase3Profit);
     phase3Row.insertCell(4).textContent = `${phase3Margin.toFixed(1)}%`;
     
     // Total Summary
@@ -863,9 +863,9 @@ function generateSummaryTable() {
     totalRow.className = 'total-row';
     totalRow.insertCell(0).textContent = 'TOTAL 24-MONTH PROJECTION';
     totalRow.insertCell(0).className = 'row-label total-label';
-    totalRow.insertCell(1).textContent = formatNumber(totalRevenue);
-    totalRow.insertCell(2).textContent = formatNumber(totalCosts);
-    totalRow.insertCell(3).textContent = formatNumber(totalProfit);
+    totalRow.insertCell(1).textContent = formatCurrency(totalRevenue);
+    totalRow.insertCell(2).textContent = formatCurrency(totalCosts);
+    totalRow.insertCell(3).textContent = formatCurrency(totalProfit);
     totalRow.insertCell(4).textContent = `${totalMargin.toFixed(1)}%`;
 }
 
@@ -896,9 +896,9 @@ function generatePhaseSummaryTable() {
     phase1Row.className = 'phase-summary-row';
     phase1Row.insertCell(0).textContent = 'Phase 1: Setup & Launch (M1-3)';
     phase1Row.insertCell(0).className = 'row-label phase-label';
-    phase1Row.insertCell(1).textContent = formatNumber(phase1Revenue);
-    phase1Row.insertCell(2).textContent = formatNumber(phase1Costs);
-    phase1Row.insertCell(3).textContent = formatNumber(phase1Profit);
+    phase1Row.insertCell(1).textContent = formatCurrency(phase1Revenue);
+    phase1Row.insertCell(2).textContent = formatCurrency(phase1Costs);
+    phase1Row.insertCell(3).textContent = formatCurrency(phase1Profit);
     phase1Row.insertCell(4).textContent = `${phase1Margin.toFixed(1)}%`;
     
     // Phase 2 Summary
@@ -911,9 +911,9 @@ function generatePhaseSummaryTable() {
     phase2Row.className = 'phase-summary-row';
     phase2Row.insertCell(0).textContent = 'Phase 2: Market Entry (M4-6)';
     phase2Row.insertCell(0).className = 'row-label phase-label';
-    phase2Row.insertCell(1).textContent = formatNumber(phase2Revenue);
-    phase2Row.insertCell(2).textContent = formatNumber(phase2Costs);
-    phase2Row.insertCell(3).textContent = formatNumber(phase2Profit);
+    phase2Row.insertCell(1).textContent = formatCurrency(phase2Revenue);
+    phase2Row.insertCell(2).textContent = formatCurrency(phase2Costs);
+    phase2Row.insertCell(3).textContent = formatCurrency(phase2Profit);
     phase2Row.insertCell(4).textContent = `${phase2Margin.toFixed(1)}%`;
     
     // Phase 3 Summary
@@ -926,9 +926,9 @@ function generatePhaseSummaryTable() {
     phase3Row.className = 'phase-summary-row';
     phase3Row.insertCell(0).textContent = 'Phase 3: Scale (M7-24)';
     phase3Row.insertCell(0).className = 'row-label phase-label';
-    phase3Row.insertCell(1).textContent = formatNumber(phase3Revenue);
-    phase3Row.insertCell(2).textContent = formatNumber(phase3Costs);
-    phase3Row.insertCell(3).textContent = formatNumber(phase3Profit);
+    phase3Row.insertCell(1).textContent = formatCurrency(phase3Revenue);
+    phase3Row.insertCell(2).textContent = formatCurrency(phase3Costs);
+    phase3Row.insertCell(3).textContent = formatCurrency(phase3Profit);
     phase3Row.insertCell(4).textContent = `${phase3Margin.toFixed(1)}%`;
     
     // Total Summary
@@ -941,9 +941,9 @@ function generatePhaseSummaryTable() {
     totalRow.className = 'total-row';
     totalRow.insertCell(0).textContent = 'TOTAL 24-MONTH PROJECTION';
     totalRow.insertCell(0).className = 'row-label total-label';
-    totalRow.insertCell(1).textContent = formatNumber(totalRevenue);
-    totalRow.insertCell(2).textContent = formatNumber(totalCosts);
-    totalRow.insertCell(3).textContent = formatNumber(totalProfit);
+    totalRow.insertCell(1).textContent = formatCurrency(totalRevenue);
+    totalRow.insertCell(2).textContent = formatCurrency(totalCosts);
+    totalRow.insertCell(3).textContent = formatCurrency(totalProfit);
     totalRow.insertCell(4).textContent = `${totalMargin.toFixed(1)}%`;
 }
 
@@ -1005,28 +1005,20 @@ function printCompleteModel() {
 }
 
 // FIXED UTILITY FUNCTIONS - These now properly format numbers without currency symbols
-function formatNumber(amount) {
-    // Ensure we have a valid number
+function formatCurrency(amount) {
     const num = parseFloat(amount) || 0;
-    
-    // Handle zero
-    if (num === 0) return '0';
-    
-    // Format with thousands separators, no currency symbol
-    return num.toLocaleString('en-ZA', {
+
+    return new Intl.NumberFormat('en-ZA', {
+        style: 'currency',
+        currency: 'ZAR',
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
-    });
+    }).format(num);
 }
 
-// Keep this separate in case you need currency formatting elsewhere
-function formatCurrency(amount) {
-    return formatNumber(amount);
-}
-
-// Keep this separate for revenue (same as formatNumber now)
+// Keep this separate for revenue (same as formatCurrency now)
 function formatRevenue(amount) {
-    return formatNumber(amount);
+    return formatCurrency(amount);
 }
 
 // Initialize when DOM is loaded
@@ -1070,11 +1062,11 @@ function updateRevenueCalculator() {
         'phase2Transactions': phase2Transactions,
         'phase3Transactions': phase3Transactions,
         'phase3bTransactions': phase3bTransactions,
-        'phase1Revenue': formatNumber(phase1Revenue),
-        'phase2Revenue': formatNumber(phase2Revenue),
-        'phase3Revenue': formatNumber(phase3Revenue),
-        'phase3bRevenue': formatNumber(phase3bRevenue),
-        'currentOrderValue': formatNumber(avgOrderValue),
+        'phase1Revenue': formatCurrency(phase1Revenue),
+        'phase2Revenue': formatCurrency(phase2Revenue),
+        'phase3Revenue': formatCurrency(phase3Revenue),
+        'phase3bRevenue': formatCurrency(phase3bRevenue),
+        'currentOrderValue': formatCurrency(avgOrderValue),
         'currentGrowthRate': (growthRate * 100).toFixed(0)
     };
     
