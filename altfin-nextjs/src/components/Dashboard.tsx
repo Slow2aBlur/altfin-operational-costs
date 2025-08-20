@@ -12,16 +12,16 @@ interface DashboardProps {
 
 export default function Dashboard({ assumptions }: DashboardProps) {
   // Helper functions defined at the top
-  function formatCurrency(amount: number): string {
-    if (amount === 0) return '0';
-    
-    // Use a consistent number formatting approach that works the same on server and client
-    const absAmount = Math.abs(amount);
-    const formatted = absAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    
-    if (amount < 0) return `-${formatted}`;
-    return formatted;
-  }
+  const formatCurrency = useMemo(
+    () =>
+      new Intl.NumberFormat('en-ZA', {
+        style: 'currency',
+        currency: 'ZAR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+    []
+  );
 
   function calculateMonthlyRevenue(month: number, assumptions: Assumptions): number {
     // ONLY the transaction volume grows at 3% per quarter
@@ -272,16 +272,16 @@ export default function Dashboard({ assumptions }: DashboardProps) {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-gray-600">Revenue:</span>
-              <span className="font-semibold text-green-600">{formatCurrency(calculations.phase1.revenue)}</span>
+              <span className="font-semibold text-green-600">{formatCurrency.format(calculations.phase1.revenue)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Costs:</span>
-              <span className="font-semibold text-red-600">{formatCurrency(calculations.phase1.costs)}</span>
+              <span className="font-semibold text-red-600">{formatCurrency.format(calculations.phase1.costs)}</span>
             </div>
             <div className="flex justify-between pt-2 border-t">
               <span className="text-gray-800 font-semibold">Profit:</span>
               <span className={`font-bold text-lg ${calculations.phase1.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatCurrency(calculations.phase1.profit)}
+                {formatCurrency.format(calculations.phase1.profit)}
               </span>
             </div>
           </div>
@@ -293,16 +293,16 @@ export default function Dashboard({ assumptions }: DashboardProps) {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-gray-600">Revenue:</span>
-              <span className="font-semibold text-green-600">{formatCurrency(calculations.phase2.revenue)}</span>
+              <span className="font-semibold text-green-600">{formatCurrency.format(calculations.phase2.revenue)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Costs:</span>
-              <span className="font-semibold text-red-600">{formatCurrency(calculations.phase2.costs)}</span>
+              <span className="font-semibold text-red-600">{formatCurrency.format(calculations.phase2.costs)}</span>
             </div>
             <div className="flex justify-between pt-2 border-t">
               <span className="text-gray-800 font-semibold">Profit:</span>
               <span className={`font-bold text-lg ${calculations.phase2.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatCurrency(calculations.phase2.profit)}
+                {formatCurrency.format(calculations.phase2.profit)}
               </span>
             </div>
           </div>
@@ -314,13 +314,13 @@ export default function Dashboard({ assumptions }: DashboardProps) {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-gray-600">Revenue:</span>
-              <span className="font-semibold text-green-600">{formatCurrency(calculations.phase3.revenue)}</span>
+              <span className="font-semibold text-green-600">{formatCurrency.format(calculations.phase3.revenue)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Costs:</span>
               <span className="font-semibold text-red-600">{(() => {
                 console.log('Phase 3 costs before formatting:', calculations.phase3.costs);
-                const formatted = formatCurrency(calculations.phase3.costs);
+                const formatted = formatCurrency.format(calculations.phase3.costs);
                 console.log('Phase 3 costs after formatting:', formatted);
                 return formatted;
               })()}</span>
@@ -328,7 +328,7 @@ export default function Dashboard({ assumptions }: DashboardProps) {
             <div className="flex justify-between pt-2 border-t">
               <span className="text-gray-800 font-semibold">Profit:</span>
               <span className={`font-bold text-lg ${calculations.phase3.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatCurrency(calculations.phase3.profit)}
+                {formatCurrency.format(calculations.phase3.profit)}
               </span>
             </div>
           </div>
@@ -340,16 +340,16 @@ export default function Dashboard({ assumptions }: DashboardProps) {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-gray-600">Revenue:</span>
-              <span className="font-semibold text-green-600">{formatCurrency(calculations.total.revenue)}</span>
+              <span className="font-semibold text-green-600">{formatCurrency.format(calculations.total.revenue)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Costs:</span>
-              <span className="font-semibold text-red-600">{formatCurrency(calculations.total.costs)}</span>
+              <span className="font-semibold text-red-600">{formatCurrency.format(calculations.total.costs)}</span>
             </div>
             <div className="flex justify-between pt-2 border-t">
               <span className="text-gray-800 font-semibold">Profit:</span>
               <span className={`font-bold text-lg ${calculations.total.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatCurrency(calculations.total.profit)}
+                {formatCurrency.format(calculations.total.profit)}
               </span>
             </div>
           </div>
@@ -375,36 +375,36 @@ export default function Dashboard({ assumptions }: DashboardProps) {
             <tbody className="bg-white divide-y divide-gray-200">
               <tr className="bg-blue-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-900">Phase 1: Setup & Launch (M1-3)</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-600 font-semibold">{formatCurrency(calculations.phase1.revenue)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600 font-semibold">{formatCurrency(calculations.phase1.costs)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-semibold">{formatCurrency(calculations.phase1.profit)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-600 font-semibold">{formatCurrency.format(calculations.phase1.revenue)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600 font-semibold">{formatCurrency.format(calculations.phase1.costs)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-semibold">{formatCurrency.format(calculations.phase1.profit)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-600">
                   {calculations.phase1.revenue > 0 ? ((calculations.phase1.profit / calculations.phase1.revenue) * 100).toFixed(1) : 0}%
                 </td>
               </tr>
               <tr className="bg-green-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-900">Phase 2: Market Entry (M4-6)</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-600 font-semibold">{formatCurrency(calculations.phase2.revenue)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600 font-semibold">{formatCurrency(calculations.phase2.costs)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-semibold">{formatCurrency(calculations.phase2.profit)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-600 font-semibold">{formatCurrency.format(calculations.phase2.revenue)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600 font-semibold">{formatCurrency.format(calculations.phase2.costs)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-semibold">{formatCurrency.format(calculations.phase2.profit)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-600">
                   {calculations.phase2.revenue > 0 ? ((calculations.phase2.profit / calculations.phase2.revenue) * 100).toFixed(1) : 0}%
                 </td>
               </tr>
               <tr className="bg-orange-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-orange-900">Phase 3: Scale (M7-24)</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-600 font-semibold">{formatCurrency(calculations.phase3.revenue)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600 font-semibold">{formatCurrency(calculations.phase3.costs)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-semibold">{formatCurrency(calculations.phase3.profit)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-600 font-semibold">{formatCurrency.format(calculations.phase3.revenue)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600 font-semibold">{formatCurrency.format(calculations.phase3.costs)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-semibold">{formatCurrency.format(calculations.phase3.profit)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-600">
                   {calculations.phase3.revenue > 0 ? ((calculations.phase3.profit / calculations.phase3.revenue) * 100).toFixed(1) : 0}%
                 </td>
               </tr>
               <tr className="bg-gray-900 text-white">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-bold">TOTAL 24-MONTH PROJECTION</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-400 font-bold">{formatCurrency(calculations.total.revenue)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-400 font-bold">{formatCurrency(calculations.total.costs)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-bold">{formatCurrency(calculations.total.profit)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-400 font-bold">{formatCurrency.format(calculations.total.revenue)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-400 font-bold">{formatCurrency.format(calculations.total.costs)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-bold">{formatCurrency.format(calculations.total.profit)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-300">
                   {calculations.total.revenue > 0 ? ((calculations.total.profit / calculations.total.revenue) * 100).toFixed(1) : 0}%
                 </td>
