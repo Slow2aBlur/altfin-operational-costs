@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { formatNumber } from '../utils/format';
 
 interface Assumptions {
   [key: string]: number;
@@ -12,17 +13,6 @@ interface FinancialModelProps {
 
 export default function FinancialModel({ assumptions }: FinancialModelProps) {
   // Helper functions defined at the top
-  function formatCurrency(amount: number): string {
-    if (amount === 0) return '0';
-    
-    // Use a consistent number formatting approach that works the same on server and client
-    const absAmount = Math.abs(amount);
-    const formatted = absAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    
-    if (amount < 0) return `-${formatted}`;
-    return formatted;
-  }
-
   function calculateSum(values: (string | number)[]): number {
     return values.reduce((sum: number, val: string | number) => {
       if (typeof val === 'string') {
@@ -75,13 +65,16 @@ export default function FinancialModel({ assumptions }: FinancialModelProps) {
                     {row.label}
                   </td>
                   {row.values.map((value, colIndex) => (
-                    <td key={colIndex} className={`px-6 py-4 whitespace-nowrap text-sm text-center min-w-[100px] ${
-                      row.className === 'bg-blue-600 text-white' ? 'text-white' : 
-                      (typeof value === 'number' && value < 0) ? 'text-red-600' : 
-                      row.label.includes('Revenue') || row.label.includes('Total Revenue') ? 'text-green-600' : 
-                      'text-gray-900'
-                    }`}>
-                      {value}
+                    <td
+                      key={colIndex}
+                      className={`px-6 py-4 whitespace-nowrap text-sm text-center min-w-[100px] ${
+                        row.className === 'bg-blue-600 text-white' ? 'text-white' :
+                        (typeof value === 'number' && value < 0) ? 'text-red-600' :
+                        row.label.includes('Revenue') || row.label.includes('Total Revenue') ? 'text-green-600' :
+                        'text-gray-900'
+                      }`}
+                    >
+                      {typeof value === 'number' ? formatNumber(value) : value}
                     </td>
                   ))}
                 </tr>
@@ -99,13 +92,13 @@ export default function FinancialModel({ assumptions }: FinancialModelProps) {
             <div className="flex justify-between">
               <span className="text-gray-600">Total Revenue:</span>
               <span className="font-semibold text-green-600">
-                R{formatCurrency(calculateSum(financialModel.find(row => row.label === 'Total Revenue')?.values || []))}
+                {formatNumber(calculateSum(financialModel.find(row => row.label === 'Total Revenue')?.values || []))}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Average Monthly:</span>
               <span className="font-semibold text-green-600">
-                R{formatCurrency(calculateSum(financialModel.find(row => row.label === 'Total Revenue')?.values || []) / 24)}
+                {formatNumber(calculateSum(financialModel.find(row => row.label === 'Total Revenue')?.values || []) / 24)}
               </span>
             </div>
           </div>
@@ -117,13 +110,13 @@ export default function FinancialModel({ assumptions }: FinancialModelProps) {
             <div className="flex justify-between">
               <span className="text-gray-600">Total Costs:</span>
               <span className="font-semibold text-red-600">
-                R{formatCurrency(calculateSum(financialModel.find(row => row.label === 'Total Costs')?.values || []))}
+                {formatNumber(calculateSum(financialModel.find(row => row.label === 'Total Costs')?.values || []))}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Average Monthly:</span>
               <span className="font-semibold text-red-600">
-                R{formatCurrency(calculateSum(financialModel.find(row => row.label === 'Total Costs')?.values || []) / 24)}
+                {formatNumber(calculateSum(financialModel.find(row => row.label === 'Total Costs')?.values || []) / 24)}
               </span>
             </div>
           </div>
@@ -135,13 +128,13 @@ export default function FinancialModel({ assumptions }: FinancialModelProps) {
             <div className="flex justify-between">
               <span className="text-gray-600">Total Profit:</span>
               <span className="font-semibold text-blue-600">
-                R{formatCurrency(calculateSum(financialModel.find(row => row.label === 'Net Profit')?.values || []))}
+                {formatNumber(calculateSum(financialModel.find(row => row.label === 'Net Profit')?.values || []))}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Average Monthly:</span>
               <span className="font-semibold text-blue-600">
-                R{formatCurrency(calculateSum(financialModel.find(row => row.label === 'Net Profit')?.values || []) / 24)}
+                {formatNumber(calculateSum(financialModel.find(row => row.label === 'Net Profit')?.values || []) / 24)}
               </span>
             </div>
           </div>
