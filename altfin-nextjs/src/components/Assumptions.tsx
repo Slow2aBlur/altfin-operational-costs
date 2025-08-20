@@ -1,5 +1,7 @@
 'use client';
 
+import { formatNumber } from '../utils/format';
+
 interface Assumptions {
   [key: string]: number;
 }
@@ -180,7 +182,11 @@ export default function Assumptions({ assumptions, onAssumptionChange, onScenari
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center p-4 bg-green-50 rounded-lg">
             <div className="text-2xl font-bold text-green-600">
-              {assumptions.startingTransactions || 0}
+              {formatNumber(assumptions.startingTransactions || 0, {
+                style: 'decimal',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              })}
             </div>
             <div className="text-sm text-gray-600">Starting Transactions</div>
           </div>
@@ -192,7 +198,7 @@ export default function Assumptions({ assumptions, onAssumptionChange, onScenari
           </div>
           <div className="text-center p-4 bg-purple-50 rounded-lg">
             <div className="text-2xl font-bold text-purple-600">
-              R{(assumptions.averageOrderValue || 0).toLocaleString()}
+              {formatNumber(assumptions.averageOrderValue || 0)}
             </div>
             <div className="text-sm text-gray-600">Average Order Value</div>
           </div>
