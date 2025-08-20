@@ -13,14 +13,10 @@ interface DashboardProps {
 export default function Dashboard({ assumptions }: DashboardProps) {
   // Helper functions defined at the top
   function formatCurrency(amount: number): string {
-    if (amount === 0) return '0';
-    
     // Use a consistent number formatting approach that works the same on server and client
     const absAmount = Math.abs(amount);
     const formatted = absAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    
-    if (amount < 0) return `-${formatted}`;
-    return formatted;
+    return amount < 0 ? `-R${formatted}` : `R${formatted}`;
   }
 
   function calculateMonthlyRevenue(month: number, assumptions: Assumptions): number {
