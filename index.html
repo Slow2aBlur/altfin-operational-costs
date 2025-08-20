@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alteram Lifestyle - 24-Month Financial Model</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=8">
 </head>
 <body>
     <div class="container">
@@ -17,7 +17,9 @@
             <div class="tab active" data-tab="assumptions">Assumptions Hub</div>
             <div class="tab" data-tab="model">24-Month Model</div>
             <div class="tab" data-tab="dashboard">Dashboard</div>
+            <div class="tab" data-tab="phase-details">Phase Details</div>
             <div class="tab" data-tab="scenarios">Scenarios</div>
+            <div class="tab" data-tab="reference">Reference Guide</div>
         </div>
         
         <div id="assumptions" class="tab-content active">
@@ -25,199 +27,397 @@
                 <h2>Assumptions Hub - Control Panel</h2>
                 <button class="print-btn" onclick="printTab('assumptions')">📄 Print PDF</button>
             </div>
+            
+            <div class="scenario-controls">
+                <h3>Quick Scenario Loading</h3>
+                <div class="scenario-buttons">
+                    <button class="scenario-btn" onclick="loadScenario('conservative')">Load Conservative</button>
+                    <button class="scenario-btn" onclick="loadScenario('aggressive')">Load Aggressive</button>
+                    <button class="scenario-btn" onclick="loadScenario('market')">Load Market Rates</button>
+                </div>
+                <div class="scenario-descriptions">
+                    <div class="scenario-desc">
+                        <strong>Conservative:</strong> 10% quarterly growth, lower volumes, higher contingency
+                    </div>
+                    <div class="scenario-desc">
+                        <strong>Aggressive:</strong> 25% quarterly growth, higher marketing, faster hiring
+                    </div>
+                    <div class="scenario-desc">
+                        <strong>Market Rates:</strong> 15% quarterly growth, balanced approach
+                    </div>
+                </div>
+            </div>
+            
             <div class="assumptions-grid">
                 <div class="assumption-section">
                     <h3>Growth & Volume Parameters</h3>
                     <div class="input-group">
-                        <label>Quarterly Growth Rate (%)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Expected quarterly growth rate for transaction volume. Higher rates mean faster business expansion but may require more resources.">ℹ️</span>
+                            <label>Quarterly Growth Rate (%)</label>
+                        </div>
                         <input type="number" id="quarterlyGrowth" value="15" step="0.1">
                     </div>
                     <div class="input-group">
-                        <label>Starting Monthly Transactions</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Number of transactions you expect to process in the first month. This is your baseline volume.">ℹ️</span>
+                            <label>Starting Monthly Transactions</label>
+                        </div>
                         <input type="number" id="startingTransactions" value="100">
                     </div>
                     <div class="input-group">
-                        <label>Average Order Value (ZAR)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Average value of each customer transaction in South African Rand (ZAR). This drives your revenue per transaction.">ℹ️</span>
+                            <label>Average Order Value (ZAR)</label>
+                        </div>
                         <input type="number" id="averageOrderValue" value="3000">
                     </div>
                     <div class="input-group">
-                        <label>Customer Service: Customers per FTE</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="How many customers one full-time customer service employee can handle. Higher numbers mean more efficiency.">ℹ️</span>
+                            <label>Customer Service: Customers per FTE</label>
+                        </div>
                         <input type="number" id="customersPerFTE" value="500">
                     </div>
                 </div>
+
+
                 
                 <div class="assumption-section">
                     <h3>Revenue Parameters</h3>
                     <div class="input-group">
-                        <label>KhulaPay Platform Fee (%)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Platform fee percentage charged on KhulaPay lay-by transactions. This is your revenue from the lay-by service.">ℹ️</span>
+                            <label>KhulaPay Platform Fee (%)</label>
+                        </div>
                         <input type="number" id="khulaPayFee" value="2.5" step="0.1">
                     </div>
                     <div class="input-group">
-                        <label>SharePay Service Fee (%)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Service fee percentage charged on SharePay social lending transactions. This is your revenue from the social lending service.">ℹ️</span>
+                            <label>SharePay Service Fee (%)</label>
+                        </div>
                         <input type="number" id="sharePayFee" value="2.0" step="0.1">
                     </div>
                     <div class="input-group">
-                        <label>EasyNow Interest Rate (% annual)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Annual interest rate charged on EasyNow buy-now-pay-later loans. This is your revenue from BNPL interest.">ℹ️</span>
+                            <label>EasyNow Interest Rate (% annual)</label>
+                        </div>
                         <input type="number" id="easyNowRate" value="24" step="0.1">
                     </div>
                     <div class="input-group">
-                        <label>FlexLine Interest Rate (% annual)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Annual interest rate charged on FlexLine credit line products. This is your revenue from credit line interest.">ℹ️</span>
+                            <label>FlexLine Interest Rate (% annual)</label>
+                        </div>
                         <input type="number" id="flexLineRate" value="22" step="0.1">
+                    </div>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Additional Revenue Streams</h3>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="One-time initiation fee charged to customers when opening a credit account. This is a flat fee per new customer.">ℹ️</span>
+                            <label>Account Initiation Fee (ZAR per customer)</label>
+                        </div>
+                        <input type="number" id="initiationFee" value="150" step="10">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly or annual service fee charged to customers for maintaining their credit account. This is ongoing revenue.">ℹ️</span>
+                            <label>Monthly Service Fee (ZAR per customer/month)</label>
+                        </div>
+                        <input type="number" id="monthlyServiceFee" value="25" step="5">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Commission percentage earned from merchants using your credit platform. This is revenue sharing with business partners.">ℹ️</span>
+                            <label>Merchant Commission Rate (%)</label>
+                        </div>
+                        <input type="number" id="merchantCommissionRate" value="1.5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Late payment penalty fee charged to customers who miss their payment deadlines. This is additional revenue from penalties.">ℹ️</span>
+                            <label>Late Payment Penalty (ZAR per late payment)</label>
+                        </div>
+                        <input type="number" id="latePaymentPenalty" value="100" step="10">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Default charge applied when customers fail to repay their loans. This covers administrative costs of default management.">ℹ️</span>
+                            <label>Default Charge (ZAR per default)</label>
+                        </div>
+                        <input type="number" id="defaultCharge" value="250" step="25">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Expected percentage of customers who will pay late or default on their loans. This affects penalty and default revenue.">ℹ️</span>
+                            <label>Expected Late/Default Rate (%)</label>
+                        </div>
+                        <input type="number" id="expectedLateDefaultRate" value="8" step="0.5">
                     </div>
                 </div>
                 
                 <div class="assumption-section">
                     <h3>Product Mix (%)</h3>
                     <div class="input-group">
-                        <label>KhulaPay (Lay-By)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Percentage of total transactions that will be KhulaPay lay-by services. Total of all product mixes should equal 100%.">ℹ️</span>
+                            <label>KhulaPay (Lay-By)</label>
+                        </div>
                         <input type="number" id="khulaPayMix" value="40" step="1">
                     </div>
                     <div class="input-group">
-                        <label>SharePay (Social)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Percentage of total transactions that will be SharePay social lending services. Total of all product mixes should equal 100%.">ℹ️</span>
+                            <label>SharePay (Social)</label>
+                        </div>
                         <input type="number" id="sharePayMix" value="15" step="1">
                     </div>
                     <div class="input-group">
-                        <label>EasyNow (BNPL)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Percentage of total transactions that will be EasyNow buy-now-pay-later services. Total of all product mixes should equal 100%.">ℹ️</span>
+                            <label>EasyNow (BNPL)</label>
+                        </div>
                         <input type="number" id="easyNowMix" value="30" step="1">
                     </div>
                     <div class="input-group">
-                        <label>FlexLine (Credit)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Percentage of total transactions that will be FlexLine credit line services. Total of all product mixes should equal 100%.">ℹ️</span>
+                            <label>FlexLine (Credit)</label>
+                        </div>
                         <input type="number" id="flexLineMix" value="15" step="1">
                     </div>
                 </div>
                 
                 <div class="assumption-section">
-                    <h3>Phase 1: Setup & Launch (M1-6)</h3>
+                    <h3>Phase 1: Setup & Launch (M1-3)</h3>
                     <div class="input-group">
-                        <label>Compliance Oversight Salary (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly salary for compliance oversight staff during the initial setup phase. This person ensures regulatory compliance.">ℹ️</span>
+                            <label>Compliance Oversight Salary (ZAR/month)</label>
+                        </div>
                         <input type="number" id="complianceOversightSalary" value="25000">
                     </div>
                     <div class="input-group">
-                        <label>Admin Assistant Salary (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly salary for administrative assistant during the initial setup phase. This person handles day-to-day administrative tasks.">ℹ️</span>
+                            <label>Admin Assistant Salary (ZAR/month)</label>
+                        </div>
                         <input type="number" id="adminAssistantSalary" value="15000">
                     </div>
                     <div class="input-group">
-                        <label>White-label Platform SaaS (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly subscription cost for the white-label platform software-as-a-service. This is your core technology platform.">ℹ️</span>
+                            <label>White-label Platform SaaS (ZAR/month)</label>
+                        </div>
                         <input type="number" id="saasSubscriptionMonthly" value="8000">
                     </div>
                     <div class="input-group">
-                        <label>Hosting & Security P1 (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for hosting infrastructure and security measures during Phase 1. Includes servers, SSL certificates, and basic security.">ℹ️</span>
+                            <label>Hosting & Security P1 (ZAR/month)</label>
+                        </div>
                         <input type="number" id="hostingSecurityP1Monthly" value="3000">
                     </div>
                     <div class="input-group">
-                        <label>NCR Licence Fees (ZAR, one-off)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="One-time cost for National Credit Regulator (NCR) license fees. Required to operate as a credit provider in South Africa.">ℹ️</span>
+                            <label>NCR Licence Fees (ZAR, one-off)</label>
+                        </div>
                         <input type="number" id="ncrLicenceOneoff" value="1800">
                     </div>
                     <div class="input-group">
-                        <label>Legal Setup & Contracts (ZAR, one-off)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="One-time cost for legal setup, contracts, and regulatory compliance documentation. Includes terms of service and privacy policies.">ℹ️</span>
+                            <label>Legal Setup & Contracts (ZAR, one-off)</label>
+                        </div>
                         <input type="number" id="legalSetupOneoff" value="7500">
                     </div>
                     <div class="input-group">
-                        <label>Incorporation Costs (ZAR, one-off)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="One-time cost for company incorporation and registration with the Companies and Intellectual Property Commission (CIPC).">ℹ️</span>
+                            <label>Incorporation Costs (ZAR, one-off)</label>
+                        </div>
                         <input type="number" id="incorporationOneoff" value="175">
                     </div>
                 </div>
                 
                 <div class="assumption-section">
-                    <h3>Phase 2: Market Entry (M7-18)</h3>
+                    <h3>Phase 2: Market Entry (M4-6)</h3>
                     <div class="input-group">
-                        <label>Credit Committee Member Stipend (ZAR/month each)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly stipend for each credit committee member. These members review and approve credit applications.">ℹ️</span>
+                            <label>Credit Committee Member Stipend (ZAR/month each)</label>
+                        </div>
                         <input type="number" id="creditCommitteeMemberStipend" value="5000">
                     </div>
                     <div class="input-group">
-                        <label>Customer Service Agent Salary (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly salary for customer service agents during Phase 2. These agents handle customer inquiries and support.">ℹ️</span>
+                            <label>Customer Service Agent Salary (ZAR/month)</label>
+                        </div>
                         <input type="number" id="csAgentSalary" value="12000">
                     </div>
                     <div class="input-group">
-                        <label>CS Agents Count (Phase 2)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Number of customer service agents you plan to hire in Phase 2. This is the total count for the entire period.">ℹ️</span>
+                            <label>CS Agents Count (Phase 2)</label>
+                        </div>
                         <input type="number" id="csAgentsCountP2" value="2">
                     </div>
                     <div class="input-group">
-                        <label>Bureau Check Cost (ZAR per check)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Cost per bureau check conducted for creditworthiness verification.">ℹ️</span>
+                            <label>Bureau Check Cost (ZAR per check)</label>
+                        </div>
                         <input type="number" id="unitCostBureauCheck" value="60">
                     </div>
                     <div class="input-group">
-                        <label>API Query Cost (ZAR per query)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Cost per API query to retrieve customer data or perform initial scoring.">ℹ️</span>
+                            <label>API Query Cost (ZAR per query)</label>
+                        </div>
                         <input type="number" id="unitCostApiQuery" value="5">
                     </div>
                     <div class="input-group">
-                        <label>Scoring Query Cost (ZAR per query)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Cost per scoring query to determine creditworthiness and risk level.">ℹ️</span>
+                            <label>Scoring Query Cost (ZAR per query)</label>
+                        </div>
                         <input type="number" id="unitCostScoringQuery" value="8">
                     </div>
                     <div class="input-group">
-                        <label>Collections Case Cost (ZAR per case)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Cost per collections case initiated to recover outstanding debt.">ℹ️</span>
+                            <label>Collections Case Cost (ZAR per case)</label>
+                        </div>
                         <input type="number" id="unitCostCollectionsCase" value="500">
                     </div>
                     <div class="input-group">
-                        <label>Notification Cost (ZAR per notification)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Cost per notification sent to customers regarding payment due dates or status updates.">ℹ️</span>
+                            <label>Notification Cost (ZAR per notification)</label>
+                        </div>
                         <input type="number" id="unitCostNotification" value="0.25">
                     </div>
                     <div class="input-group">
-                        <label>Merchant Success Manager Salary (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly salary for the merchant success manager responsible for onboarding new merchants and managing existing ones.">ℹ️</span>
+                            <label>Merchant Success Manager Salary (ZAR/month)</label>
+                        </div>
                         <input type="number" id="merchantSuccessManagerSalary" value="30000">
                     </div>
                     <div class="input-group">
-                        <label>Audit & Insurance (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for audit and insurance coverage for the company's operations and assets.">ℹ️</span>
+                            <label>Audit & Insurance (ZAR/month)</label>
+                        </div>
                         <input type="number" id="auditInsuranceMonthly" value="4000">
                     </div>
                     <div class="input-group">
-                        <label>Office P2 (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for office space and basic amenities for Phase 2 operations.">ℹ️</span>
+                            <label>Office P2 (ZAR/month)</label>
+                        </div>
                         <input type="number" id="officeP2Monthly" value="15000">
                     </div>
                     <div class="input-group">
-                        <label>Office IT & Supplies (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for office IT and supplies for Phase 2 operations.">ℹ️</span>
+                            <label>Office IT & Supplies (ZAR/month)</label>
+                        </div>
                         <input type="number" id="officeItSuppliesMonthly" value="2000">
                     </div>
                     <div class="input-group">
-                        <label>Marketing Baseline (transactions/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Baseline number of marketing activities you plan to conduct to acquire new customers.">ℹ️</span>
+                            <label>Marketing Baseline (transactions/month)</label>
+                        </div>
                         <input type="number" id="marketingBaseline" value="100">
                     </div>
                     <div class="input-group">
-                        <label>Marketing Unit Cost (ZAR per transaction equivalent)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Cost per marketing activity (e.g., social media posts, ads, content creation).">ℹ️</span>
+                            <label>Marketing Unit Cost (ZAR per transaction equivalent)</label>
+                        </div>
                         <input type="number" id="unitCostMarketing" value="150">
                     </div>
                     <div class="input-group">
-                        <label>Travel Baseline (trips/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Baseline number of business trips you plan to take for marketing or operations.">ℹ️</span>
+                            <label>Travel Baseline (trips/month)</label>
+                        </div>
                         <input type="number" id="travelBaseline" value="5">
                     </div>
                     <div class="input-group">
-                        <label>Travel Unit Cost (ZAR per trip)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Cost per business trip (e.g., flights, accommodation, transport).">ℹ️</span>
+                            <label>Travel Unit Cost (ZAR per trip)</label>
+                        </div>
                         <input type="number" id="unitCostTravel" value="2000">
                     </div>
                 </div>
                 
                 <div class="assumption-section">
-                    <h3>Phase 3: Scale (M19-24)</h3>
+                    <h3>Phase 3: Scale (M7-24)</h3>
                     <div class="input-group">
-                        <label>Collections Department (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for the collections department responsible for managing and recovering outstanding debts.">ℹ️</span>
+                            <label>Collections Department (ZAR/month)</label>
+                        </div>
                         <input type="number" id="collectionsDeptMonthly" value="25000">
                     </div>
                     <div class="input-group">
-                        <label>Customer Service P3 (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for the customer service team during Phase 3, which is larger than Phase 2.">ℹ️</span>
+                            <label>Customer Service P3 (ZAR/month)</label>
+                        </div>
                         <input type="number" id="customerServicePhase3Monthly" value="60000">
                     </div>
                     <div class="input-group">
-                        <label>Platform Enhancements (ZAR, one-off)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="One-time cost for platform enhancements and new features to improve user experience and functionality.">ℹ️</span>
+                            <label>Platform Enhancements (ZAR, one-off)</label>
+                        </div>
                         <input type="number" id="platformEnhancementsOneoff" value="50000">
                     </div>
                     <div class="input-group">
-                        <label>Hosting & Security P3 (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for hosting infrastructure and security measures for Phase 3, which is more robust.">ℹ️</span>
+                            <label>Hosting & Security P3 (ZAR/month)</label>
+                        </div>
                         <input type="number" id="hostingSecurityP3Monthly" value="8000">
                     </div>
                     <div class="input-group">
-                        <label>Regulatory Reporting & Governance (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for regulatory reporting and governance to ensure compliance and manage risk.">ℹ️</span>
+                            <label>Regulatory Reporting & Governance (ZAR/month)</label>
+                        </div>
                         <input type="number" id="regReportingGovMonthly" value="6000">
                     </div>
                     <div class="input-group">
-                        <label>Merchant Team (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for the merchant team responsible for onboarding and supporting new merchants.">ℹ️</span>
+                            <label>Merchant Team (ZAR/month)</label>
+                        </div>
                         <input type="number" id="merchantTeamMonthly" value="45000">
                     </div>
                     <div class="input-group">
-                        <label>Office P3 (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for office space and basic amenities for Phase 3 operations.">ℹ️</span>
+                            <label>Office P3 (ZAR/month)</label>
+                        </div>
                         <input type="number" id="officeP3Monthly" value="25000">
                     </div>
                     <div class="input-group">
-                        <label>Operational Support (ZAR/month)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for operational support and general administrative tasks for Phase 3.">ℹ️</span>
+                            <label>Operational Support (ZAR/month)</label>
+                        </div>
                         <input type="number" id="operationalSupportMonthly" value="8000">
                     </div>
                 </div>
@@ -225,27 +425,45 @@
                 <div class="assumption-section">
                     <h3>Volume Drivers</h3>
                     <div class="input-group">
-                        <label>Starting Volume: API Queries</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Initial number of API queries you expect to process for credit scoring and customer data retrieval.">ℹ️</span>
+                            <label>Starting Volume: API Queries</label>
+                        </div>
                         <input type="number" id="startVolApiQueries" value="100">
                     </div>
                     <div class="input-group">
-                        <label>Starting Volume: Scoring Queries</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Initial number of scoring queries you expect to process for creditworthiness assessment.">ℹ️</span>
+                            <label>Starting Volume: Scoring Queries</label>
+                        </div>
                         <input type="number" id="startVolScoringQueries" value="100">
                     </div>
                     <div class="input-group">
-                        <label>Starting Volume: Bureau Checks</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Initial number of bureau checks you expect to perform for customer verification.">ℹ️</span>
+                            <label>Starting Volume: Bureau Checks</label>
+                        </div>
                         <input type="number" id="startVolBureauChecks" value="100">
                     </div>
                     <div class="input-group">
-                        <label>Starting Volume: Collections Cases</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Initial number of collections cases you expect to initiate for debt recovery.">ℹ️</span>
+                            <label>Starting Volume: Collections Cases</label>
+                        </div>
                         <input type="number" id="startVolCollectionsCases" value="5">
                     </div>
                     <div class="input-group">
-                        <label>Starting Volume: Notifications</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Initial number of notifications you expect to send to customers regarding payment due dates or status updates.">ℹ️</span>
+                            <label>Starting Volume: Notifications</label>
+                        </div>
                         <input type="number" id="startVolNotifications" value="300">
                     </div>
                     <div class="input-group">
-                        <label>Payment Processing Rate (%)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Percentage of total transactions that result in a payment being processed and settled.">ℹ️</span>
+                            <label>Payment Processing Rate (%)</label>
+                        </div>
                         <input type="number" id="paymentProcessingRate" value="2.9" step="0.1">
                     </div>
                 </div>
@@ -253,20 +471,85 @@
                 <div class="assumption-section">
                     <h3>Risk & Scaling</h3>
                     <div class="input-group">
-                        <label>General Contingency (%)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="General contingency buffer to cover unexpected expenses or revenue shortfalls.">ℹ️</span>
+                            <label>General Contingency (%)</label>
+                        </div>
                         <input type="number" id="generalContingency" value="5" step="0.1">
                     </div>
                     <div class="input-group">
-                        <label>Credit Loss Rate (%)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Percentage of total outstanding loans that are expected to default and result in a loss for the company.">ℹ️</span>
+                            <label>Credit Loss Rate (%)</label>
+                        </div>
                         <input type="number" id="creditLossRate" value="3" step="0.1">
                     </div>
                     <div class="input-group">
-                        <label>Working Capital Buffer (ZAR)</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Working capital buffer to ensure you have sufficient funds to cover operational expenses and unexpected cash outflows.">ℹ️</span>
+                            <label>Working Capital Buffer (ZAR)</label>
+                        </div>
                         <input type="number" id="workingCapitalBuffer" value="100000">
                     </div>
                     <div class="input-group">
-                        <label>Fully Loaded Cost Multiplier</label>
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Multiplier applied to fully loaded costs to account for all expenses, including overhead, salaries, and contingencies.">ℹ️</span>
+                            <label>Fully Loaded Cost Multiplier</label>
+                        </div>
                         <input type="number" id="fullyLoadedMultiplier" value="1.25" step="0.01">
+                    </div>
+                </div>
+                
+                <div class="assumption-section">
+                    <h3>Additional Cost Items</h3>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Annual interest rate on funding used to provide credit to customers. This is the cost of borrowing money to lend.">ℹ️</span>
+                            <label>Cost of Capital Rate (% annual)</label>
+                        </div>
+                        <input type="number" id="costOfCapitalRate" value="12" step="0.5">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly premium cost for credit insurance to protect against customer defaults and credit losses.">ℹ️</span>
+                            <label>Credit Insurance Premium (ZAR/month)</label>
+                        </div>
+                        <input type="number" id="creditInsurancePremium" value="5000" step="500">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for legal services related to debt collection, contract enforcement, and regulatory compliance.">ℹ️</span>
+                            <label>Legal & Collections Legal (ZAR/month)</label>
+                        </div>
+                        <input type="number" id="legalCollectionsMonthly" value="8000" step="1000">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for debt recovery agents and collection agencies to recover outstanding debts from defaulting customers.">ℹ️</span>
+                            <label>Recovery Agency Costs (ZAR/month)</label>
+                        </div>
+                        <input type="number" id="recoveryAgencyMonthly" value="6000" step="1000">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for enhanced technology platform features, API integrations, and third-party software licenses.">ℹ️</span>
+                            <label>Enhanced Technology Costs (ZAR/month)</label>
+                        </div>
+                        <input type="number" id="enhancedTechMonthly" value="12000" step="1000">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for customer acquisition campaigns, digital marketing, and promotional activities to grow the customer base.">ℹ️</span>
+                            <label>Marketing & Acquisition (ZAR/month)</label>
+                        </div>
+                        <input type="number" id="marketingAcquisitionMonthly" value="15000" step="1000">
+                    </div>
+                    <div class="input-group">
+                        <div class="tooltip-container">
+                            <span class="tooltip-icon" title="Monthly cost for regulatory compliance, audits, reporting, and maintaining required licenses and certifications.">ℹ️</span>
+                            <label>Compliance & Regulatory (ZAR/month)</label>
+                        </div>
+                        <input type="number" id="complianceRegulatoryMonthly" value="10000" step="1000">
                     </div>
                 </div>
             </div>
@@ -280,7 +563,44 @@
                 <h2>24-Month Financial Model</h2>
                 <button class="print-btn" onclick="printTab('model')">📄 Print PDF</button>
             </div>
-            <div class="scrollable-table">
+            
+            <div class="phase-explanation">
+                <h3>📋 Phased Cost Structure Explained</h3>
+                <div class="phase-grid">
+                    <div class="phase-card">
+                        <div class="phase-header phase1">Phase 1: Setup & Launch</div>
+                        <div class="phase-details">
+                            <strong>Months:</strong> M1-M3<br>
+                            <strong>Focus:</strong> Business setup, compliance, and initial infrastructure<br>
+                            <strong>Costs:</strong> Compliance oversight, admin assistant, one-time legal/incorporation costs<br>
+                            <strong>Note:</strong> SaaS subscription and hosting continue throughout all phases
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header phase2">Phase 2: Market Entry</div>
+                        <div class="phase-details">
+                            <strong>Months:</strong> M4-M6<br>
+                            <strong>Focus:</strong> Market entry, customer service, and operational scaling<br>
+                            <strong>Costs:</strong> Credit committee, customer service agents, merchant success manager<br>
+                            <strong>Note:</strong> Variable costs scale with transaction volume
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header phase3">Phase 3: Scale</div>
+                        <div class="phase-details">
+                            <strong>Months:</strong> M7-M24<br>
+                            <strong>Focus:</strong> Full-scale operations, collections, and merchant team expansion<br>
+                            <strong>Costs:</strong> Collections department, regulatory reporting, merchant team<br>
+                            <strong>Note:</strong> Longest phase with highest operational complexity
+                        </div>
+                    </div>
+                </div>
+                <div class="phase-note">
+                    <strong>💡 Why R0?</strong> R0 means "no cost this month" - either the phase hasn't started yet, or it's already completed. This phased approach prevents over-spending and matches realistic business growth.
+                </div>
+            </div>
+            
+            <div class="table-container">
                 <table class="model-table" id="financialModel">
                     <!-- Model will be generated by JavaScript -->
                 </table>
@@ -297,9 +617,75 @@
             </div>
             
             <h3>Key Metrics Summary</h3>
-            <div class="scrollable-table">
+            <div class="table-container">
                 <table class="model-table" id="summaryTable">
                     <!-- Summary will be generated by JavaScript -->
+                </table>
+            </div>
+        </div>
+        
+        <div id="phase-details" class="tab-content">
+            <div class="tab-header">
+                <h2>Phase Details</h2>
+                <button class="print-btn" onclick="printTab('phase-details')">📄 Print PDF</button>
+            </div>
+            <div class="phase-details-content">
+            
+            <!-- Example Calculations Section -->
+            <div class="phase-examples-section">
+                <h3>🧮 Example Calculations</h3>
+                <div class="example-content">
+                    <div class="example-item">
+                        <h4>Phase 1 Revenue Example (Month 1):</h4>
+                        <p><strong>Base Revenue:</strong> 100 transactions × R3,000 = R300,000</p>
+                        <p><strong>Additional Revenue:</strong> Initiation fees + Service fees + Merchant commission + Interest income + Penalties</p>
+                        <p><strong>Total Monthly Revenue:</strong> R300,000 + Additional streams</p>
+                    </div>
+                    
+                    <div class="example-item">
+                        <h4>Phase 1 Costs Example (Month 1):</h4>
+                        <p><strong>Ongoing Costs:</strong> SaaS (R8,000) + Hosting (R3,000) = R11,000</p>
+                        <p><strong>Phase 1 Costs:</strong> Compliance (R25,000) + Admin (R15,000) = R40,000</p>
+                        <p><strong>One-time Costs:</strong> NCR License + Legal + Incorporation = R15,000</p>
+                        <p><strong>Total Monthly Costs:</strong> R66,000</p>
+                    </div>
+                    
+                    <div class="example-item">
+                        <h4>Phase 2 Revenue Example (Month 4):</h4>
+                        <p><strong>Base Revenue:</strong> 115 transactions × R3,000 = R345,000 (15% growth applied)</p>
+                        <p><strong>Additional Revenue:</strong> Same structure as Phase 1</p>
+                        <p><strong>Total Monthly Revenue:</strong> R345,000 + Additional streams</p>
+                    </div>
+                    
+                    <div class="example-item">
+                        <h4>Phase 2 Costs Example (Month 4):</h4>
+                        <p><strong>Ongoing Costs:</strong> SaaS (R8,000) + Hosting (R3,000) = R11,000</p>
+                        <p><strong>Phase 2 Costs:</strong> Credit Committee + Customer Service + Merchant Success = R45,000</p>
+                        <p><strong>Variable Costs:</strong> API queries + Scoring + Bureau checks = R5,000</p>
+                        <p><strong>Total Monthly Costs:</strong> R61,000</p>
+                    </div>
+                    
+                    <div class="example-item">
+                        <h4>Phase 3 Revenue Example (Month 7):</h4>
+                        <p><strong>Base Revenue:</strong> 132 transactions × R3,000 = R396,000 (another 15% growth)</p>
+                        <p><strong>Additional Revenue:</strong> Same structure as previous phases</p>
+                        <p><strong>Total Monthly Revenue:</strong> R396,000 + Additional streams</p>
+                    </div>
+                    
+                    <div class="example-item">
+                        <h4>Phase 3 Costs Example (Month 7):</h4>
+                        <p><strong>Ongoing Costs:</strong> SaaS (R8,000) + Hosting (R3,000) = R11,000</p>
+                        <p><strong>Phase 3 Costs:</strong> Collections + Enhanced Customer Service + Regulatory + Merchant Team = R65,000</p>
+                        <p><strong>Variable Costs:</strong> API queries + Scoring + Bureau checks = R8,000</p>
+                        <p><strong>Total Monthly Costs:</strong> R84,000</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Phase Summary Table</h3>
+            <div class="table-container">
+                <table class="model-table" id="phaseSummaryTable">
+                    <!-- Phase summary will be generated by JavaScript -->
                 </table>
             </div>
         </div>
@@ -339,6 +725,437 @@
                         <li>Growth: 15% quarterly</li>
                         <li>Market-aligned pricing</li>
                         <li>Balanced risk approach</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="reference" class="tab-content">
+            <div class="tab-header">
+                <h2>Comprehensive Reference Guide</h2>
+                <button class="print-btn" onclick="printTab('reference')">📄 Print PDF</button>
+            </div>
+            
+            <div class="reference-content">
+                <div class="reference-section">
+                    <h3>📊 Financial Model Overview</h3>
+                    <p>This financial model projects operational costs and revenue for Alteram Lifestyle over a 24-month period, divided into three distinct phases of business development. The model incorporates South African market conditions, regulatory requirements, and fintech industry best practices.</p>
+                    
+                    <h4>Business Model Summary</h4>
+                    <ul>
+                        <li><strong>KhulaPay:</strong> Lay-by service with platform fees</li>
+                        <li><strong>SharePay:</strong> Social lending with service fees</li>
+                        <li><strong>EasyNow:</strong> Buy-now-pay-later with interest revenue</li>
+                        <li><strong>FlexLine:</strong> Credit line with interest revenue</li>
+                    </ul>
+                </div>
+
+                <div class="reference-section">
+                    <h3>🚀 Growth & Volume Parameters</h3>
+                    
+                    <h4>Quarterly Growth Rate (%)</h4>
+                    <p><strong>Definition:</strong> Expected quarterly growth rate for transaction volume.</p>
+                    <p><strong>Business Impact:</strong> Higher rates mean faster business expansion but may require more resources and capital.</p>
+                    <p><strong>Typical Range:</strong> 10-25% quarterly (40-100% annually)</p>
+                    <p><strong>Considerations:</strong> Balance growth ambition with operational capacity and funding requirements.</p>
+                    
+                    <h4>Starting Monthly Transactions</h4>
+                    <p><strong>Definition:</strong> Number of transactions expected in the first month of operations.</p>
+                    <p><strong>Business Impact:</strong> Sets the baseline volume for all subsequent calculations and growth projections.</p>
+                    <p><strong>Typical Range:</strong> 50-200 transactions/month for new fintech startups</p>
+                    <p><strong>Considerations:</strong> Based on market research, pilot programs, or conservative estimates.</p>
+                    
+                    <h4>Average Order Value (ZAR)</h4>
+                    <p><strong>Definition:</strong> Average value of each customer transaction in South African Rand.</p>
+                    <p><strong>Business Impact:</strong> Primary driver of revenue per transaction and overall business scale.</p>
+                    <p><strong>Typical Range:</strong> R1,000 - R10,000 depending on product mix</p>
+                    <p><strong>Considerations:</strong> Varies significantly between lay-by (lower) and credit products (higher).</p>
+                    
+                    <h4>Customer Service: Customers per FTE</h4>
+                    <p><strong>Definition:</strong> How many customers one full-time customer service employee can handle effectively.</p>
+                    <p><strong>Business Impact:</strong> Determines staffing requirements and operational efficiency.</p>
+                    <p><strong>Typical Range:</strong> 300-800 customers per FTE</p>
+                    <p><strong>Considerations:</strong> Higher numbers indicate better processes and automation.</p>
+                </div>
+
+                <div class="reference-section">
+                    <h3>💰 Revenue Parameters</h3>
+                    
+                    <h4>KhulaPay Platform Fee (%)</h4>
+                    <p><strong>Definition:</strong> Platform fee percentage charged on KhulaPay lay-by transactions.</p>
+                    <p><strong>Revenue Model:</strong> Transaction-based fee on lay-by purchases.</p>
+                    <p><strong>Typical Range:</strong> 2-5% of transaction value</p>
+                    <p><strong>Business Logic:</strong> Lower risk product, so fees are typically lower than credit products.</p>
+                    
+                    <h4>SharePay Service Fee (%)</h4>
+                    <p><strong>Definition:</strong> Service fee percentage charged on SharePay social lending transactions.</p>
+                    <p><strong>Revenue Model:</strong> Fee-based service for social lending facilitation.</p>
+                    <p><strong>Typical Range:</strong> 1.5-3% of transaction value</p>
+                    <p><strong>Business Logic:</strong> Social lending has moderate risk, fees reflect service value.</p>
+                    
+                    <h4>EasyNow Interest Rate (% annual)</h4>
+                    <p><strong>Definition:</strong> Annual interest rate charged on EasyNow buy-now-pay-later loans.</p>
+                    <p><strong>Revenue Model:</strong> Interest income on outstanding loan balances.</p>
+                    <p><strong>Typical Range:</strong> 18-36% annually (regulated by NCR)</p>
+                    <p><strong>Business Logic:</strong> BNPL products carry higher risk, requiring higher interest rates.</p>
+                    
+                    <h4>FlexLine Interest Rate (% annual)</h4>
+                    <p><strong>Definition:</strong> Annual interest rate charged on FlexLine credit line products.</p>
+                    <p><strong>Revenue Model:</strong> Interest income on revolving credit balances.</p>
+                    <p><strong>Typical Range:</strong> 16-32% annually (regulated by NCR)</p>
+                    <p><strong>Business Logic:</strong> Credit lines have highest risk profile, highest interest rates.</p>
+                </div>
+
+                <div class="reference-section">
+                    <h3>🧮 Revenue Calculation Explained</h3>
+                    <p><strong>Monthly Revenue = Monthly Transactions × Average Order Value</strong></p>
+                    
+                    <h4>How It Works:</h4>
+                    <ol>
+                        <li><strong>Starting Point:</strong> You begin with a baseline number of transactions (e.g., 100 transactions/month)</li>
+                        <li><strong>Growth Pattern:</strong> Transactions grow quarterly by your specified growth rate (e.g., 15% every 3 months)</li>
+                        <li><strong>Revenue Per Transaction:</strong> Each transaction generates revenue based on your average order value (e.g., R3,000)</li>
+                    </ol>
+
+                    <h4>📈 Example Calculation:</h4>
+                    <div class="calculation-example">
+                        <p><strong>Assumptions:</strong></p>
+                        <ul>
+                            <li>Starting transactions: 100/month</li>
+                            <li>Quarterly growth: 15%</li>
+                            <li>Average order value: R3,000</li>
+                        </ul>
+                        
+                        <p><strong>Monthly Breakdown:</strong></p>
+                        <ul>
+                            <li><strong>Month 1:</strong> 100 × R3,000 = R300,000</li>
+                            <li><strong>Month 2:</strong> 100 × R3,000 = R300,000</li>
+                            <li><strong>Month 3:</strong> 100 × R3,000 = R300,000</li>
+                            <li><strong>Month 4:</strong> 115 × R3,000 = R345,000 (15% growth applied)</li>
+                            <li><strong>Month 5:</strong> 115 × R3,000 = R345,000</li>
+                            <li><strong>Month 6:</strong> 115 × R3,000 = R345,000</li>
+                            <li><strong>Month 7:</strong> 132 × R3,000 = R396,000 (another 15% growth)</li>
+                            <li><strong>Month 12:</strong> 175 × R3,000 = R525,000</li>
+                            <li><strong>Month 24:</strong> 232 × R3,000 = R696,000</li>
+                        </ul>
+                    </div>
+
+                    <h4>🔍 Key Revenue Drivers:</h4>
+                    <ul>
+                        <li><strong>Transaction Volume:</strong> More customers = more revenue</li>
+                        <li><strong>Growth Rate:</strong> Higher quarterly growth = faster revenue expansion</li>
+                        <li><strong>Order Value:</strong> Higher average transaction value = more revenue per customer</li>
+                    </ul>
+
+                    <h4>⚠️ Important Notes:</h4>
+                    <ul>
+                        <li>Revenue grows in <strong>quarterly steps</strong>, not monthly</li>
+                        <li>The model assumes <strong>consistent growth</strong> throughout the 24-month period</li>
+                        <li>All revenue is <strong>transaction-based</strong> - no subscription or recurring fees</li>
+                        <li>Revenue calculations are <strong>independent of costs</strong> - they don't affect each other</li>
+                    </ul>
+
+                    <h4>🔬 Technical Formula Details:</h4>
+                    <div class="calculation-example">
+                        <p><strong>Monthly Revenue Calculation:</strong></p>
+                        <p><code>Revenue = Starting Transactions × (1 + Growth Rate)^Quarter × Average Order Value</code></p>
+                        
+                        <p><strong>Where:</strong></p>
+                        <ul>
+                            <li><strong>Starting Transactions:</strong> Your baseline volume (e.g., 100/month)</li>
+                            <li><strong>Growth Rate:</strong> Quarterly growth percentage as decimal (e.g., 15% = 0.15)</li>
+                            <li><strong>Quarter:</strong> Which quarter you're in (Month 1-3 = Q0, Month 4-6 = Q1, etc.)</li>
+                            <li><strong>Average Order Value:</strong> Revenue per transaction in ZAR</li>
+                        </ul>
+                        
+                        <p><strong>Example for Month 7 (Q2):</strong></p>
+                        <p><code>Revenue = 100 × (1 + 0.15)² × R3,000 = 100 × 1.3225 × R3,000 = R396,750</code></p>
+                        
+                        <p><strong>Why Quarterly Growth?</strong></p>
+                        <ul>
+                            <li>Business growth typically happens in cycles, not continuously</li>
+                            <li>Allows time for market penetration and customer acquisition</li>
+                            <li>More realistic than monthly growth for planning purposes</li>
+                            <li>Aligns with typical business planning and reporting cycles</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="reference-section">
+                    <h3>📈 Product Mix (%)</h3>
+                    <p><strong>Important:</strong> Total of all product mixes should equal 100%.</p>
+                    
+                    <h4>KhulaPay (Lay-By) - 40%</h4>
+                    <p><strong>Product Type:</strong> Lay-by service where customers pay in installments before receiving goods.</p>
+                    <p><strong>Risk Profile:</strong> Low risk - no credit extended, goods held as security.</p>
+                    <p><strong>Revenue Stream:</strong> Platform fees only, no interest income.</p>
+                    <p><strong>Target Market:</strong> Budget-conscious consumers, retail partnerships.</p>
+                    
+                    <h4>SharePay (Social) - 15%</h4>
+                    <p><strong>Product Type:</strong> Social lending platform connecting borrowers and lenders.</p>
+                    <p><strong>Risk Profile:</strong> Medium risk - depends on social network and credit assessment.</p>
+                    <p><strong>Revenue Stream:</strong> Service fees on successful loan facilitation.</p>
+                    <p><strong>Target Market:</strong> Community-based lending, peer-to-peer finance.</p>
+                    
+                    <h4>EasyNow (BNPL) - 30%</h4>
+                    <p><strong>Product Type:</strong> Buy-now-pay-later service for immediate purchases.</p>
+                    <p><strong>Risk Profile:</strong> High risk - unsecured credit with potential for default.</p>
+                    <p><strong>Revenue Stream:</strong> Interest income on outstanding balances.</p>
+                    <p><strong>Target Market:</strong> Online shoppers, retail partnerships, younger demographics.</p>
+                    
+                    <h4>FlexLine (Credit) - 15%</h4>
+                    <p><strong>Product Type:</strong> Revolving credit line with flexible borrowing.</p>
+                    <p><strong>Risk Profile:</strong> Highest risk - unsecured revolving credit.</p>
+                    <p><strong>Revenue Stream:</strong> Interest income on outstanding balances.</p>
+                    <p><strong>Target Market:</strong> Established customers, higher credit scores, larger amounts.</p>
+                </div>
+
+                <div class="reference-section">
+                    <h3>🏗️ Phase 1: Setup & Launch (Months 1-3)</h3>
+                    <p><strong>Timeline:</strong> August - October (M1-M3)</p>
+                    <p><strong>Focus:</strong> Business establishment, regulatory compliance, and basic infrastructure setup.</p>
+                    <ul>
+                        <li><strong>Compliance Oversight:</strong> Regulatory compliance officer salary for initial setup and licensing</li>
+                        <li><strong>Admin Assistant:</strong> Administrative support for business operations</li>
+                        <li><strong>One-time Costs:</strong> NCR license, legal setup, and incorporation fees (all in M1)</li>
+                        <li><strong>Ongoing Infrastructure:</strong> SaaS subscription and hosting continue throughout all phases</li>
+                    </ul>
+
+                    <h4>🚀 Phase 2: Market Entry (Months 4-6)</h4>
+                    <p><strong>Timeline:</strong> November - January (M4-M6)</p>
+                    <p><strong>Focus:</strong> Market entry, customer acquisition, and operational scaling.</p>
+                    <ul>
+                        <li><strong>Credit Committee:</strong> Member stipends for credit application review and approval</li>
+                        <li><strong>Customer Service:</strong> Agents to handle customer inquiries and support</li>
+                        <li><strong>Merchant Success:</strong> Manager to onboard and support new merchants</li>
+                        <li><strong>Variable Costs:</strong> API queries, scoring, bureau checks, collections, and notifications</li>
+                        <li><strong>Marketing & Travel:</strong> Customer acquisition and business development activities</li>
+                    </ul>
+
+                    <h4>📈 Phase 3: Scale (Months 7-24)</h4>
+                    <p><strong>Timeline:</strong> February onwards (M7-M24)</p>
+                    <p><strong>Focus:</strong> Full-scale operations, collections management, and merchant team expansion.</p>
+                    <ul>
+                        <li><strong>Collections Department:</strong> Dedicated team for debt recovery and collections management</li>
+                        <li><strong>Enhanced Customer Service:</strong> Expanded support team for higher transaction volumes</li>
+                        <li><strong>Regulatory & Governance:</strong> Enhanced reporting and compliance requirements</li>
+                        <li><strong>Merchant Team:</strong> Dedicated team for merchant onboarding and support</li>
+                        <li><strong>Operational Support:</strong> Additional staff for scaling operations</li>
+                        <li><strong>One-time Costs:</strong> Platform enhancements in M7 (start of Phase 3)</li>
+                    </ul>
+                </div>
+
+                <div class="reference-section">
+                    <h3>📊 Volume Drivers</h3>
+                    <p><strong>Purpose:</strong> These metrics drive operational costs based on business volume and activity levels.</p>
+                    
+                    <h4>Starting Volume: API Queries</h4>
+                    <p><strong>Definition:</strong> Initial number of API queries for credit scoring and customer data retrieval.</p>
+                    <p><strong>Growth:</strong> Scales with customer acquisition and transaction volume.</p>
+                    <p><strong>Cost Impact:</strong> Direct impact on API provider costs and infrastructure requirements.</p>
+                    
+                    <h4>Starting Volume: Scoring Queries</h4>
+                    <p><strong>Definition:</strong> Initial number of scoring queries for creditworthiness assessment.</p>
+                    <p><strong>Growth:</strong> Increases with loan applications and credit assessments.</p>
+                    <p><strong>Cost Impact:</strong> Higher volume means higher scoring costs but better risk assessment.</p>
+                    
+                    <h4>Starting Volume: Bureau Checks</h4>
+                    <p><strong>Definition:</strong> Initial number of credit bureau checks for customer verification.</p>
+                    <p><strong>Growth:</strong> Scales with new customer onboarding and credit applications.</p>
+                    <p><strong>Cost Impact:</strong> Essential for risk assessment but adds to customer acquisition costs.</p>
+                    
+                    <h4>Starting Volume: Collections Cases</h4>
+                    <p><strong>Definition:</strong> Initial number of collections cases for debt recovery.</p>
+                    <p><strong>Growth:</strong> Increases with portfolio size and default rates.</p>
+                    <p><strong>Cost Impact:</strong> Higher default rates increase collections costs and reduce profitability.</p>
+                    
+                    <h4>Starting Volume: Notifications</h4>
+                    <p><strong>Definition:</strong> Initial number of notifications sent to customers.</p>
+                    <p><strong>Growth:</strong> Scales with customer base and communication frequency.</p>
+                    <p><strong>Cost Impact:</strong> Communication costs but essential for customer engagement and collections.</p>
+                    
+                    <h4>Payment Processing Rate (%)</h4>
+                    <p><strong>Definition:</strong> Percentage of total transactions that result in successful payment processing.</p>
+                    <p><strong>Business Impact:</strong> Higher rates mean better operational efficiency and customer experience.</p>
+                    <p><strong>Typical Range:</strong> 95-99% for well-operated fintech platforms.</p>
+                </div>
+
+                <div class="reference-section">
+                    <h3>⚠️ Risk & Scaling</h3>
+                    <p><strong>Purpose:</strong> These parameters help manage risk and ensure sustainable growth.</p>
+                    
+                    <h4>General Contingency (%)</h4>
+                    <p><strong>Definition:</strong> General contingency buffer to cover unexpected expenses or revenue shortfalls.</p>
+                    <p><strong>Purpose:</strong> Provides financial cushion for operational risks and market uncertainties.</p>
+                    <p><strong>Typical Range:</strong> 3-10% depending on business maturity and risk tolerance.</p>
+                    <p><strong>Application:</strong> Applied to total operational costs as a safety margin.</p>
+                    
+                    <h4>Credit Loss Rate (%)</h4>
+                    <p><strong>Definition:</strong> Percentage of total outstanding loans expected to default and result in loss.</p>
+                    <p><strong>Business Impact:</strong> Direct impact on profitability and capital requirements.</p>
+                    <p><strong>Typical Range:</strong> 2-8% depending on product mix and risk management.</p>
+                    <p><strong>Management:</strong> Controlled through credit scoring, risk assessment, and collections.</p>
+                    
+                    <h4>Working Capital Buffer (ZAR)</h4>
+                    <p><strong>Definition:</strong> Working capital buffer to ensure sufficient funds for operational expenses.</p>
+                    <p><strong>Purpose:</strong> Covers cash flow gaps and unexpected operational costs.</p>
+                    <p><strong>Calculation:</strong> Based on monthly operational costs and cash flow cycles.</p>
+                    <p><strong>Typical Range:</strong> 2-6 months of operational costs depending on business model.</p>
+                    
+                    <h4>Fully Loaded Cost Multiplier</h4>
+                    <p><strong>Definition:</strong> Multiplier applied to fully loaded costs to account for all expenses.</p>
+                    <p><strong>Components:</strong> Includes overhead, benefits, taxes, and indirect costs.</p>
+                    <p><strong>Typical Range:</strong> 1.2-1.4 depending on business structure and benefits.</p>
+                    <p><strong>Application:</strong> Applied to salary costs to reflect total employment costs.</p>
+                </div>
+
+                <div class="reference-section">
+                    <h3>💰 Comprehensive Revenue & Cost Structure</h3>
+                    
+                    <h4>Revenue Streams</h4>
+                    <p><strong>Base Transaction Revenue:</strong> Core revenue from customer transactions and platform fees.</p>
+                    <ul>
+                        <li><strong>KhulaPay Platform Fees:</strong> Percentage-based fees on lay-by transactions</li>
+                        <li><strong>SharePay Service Fees:</strong> Fees for facilitating social lending</li>
+                        <li><strong>EasyNow Interest Income:</strong> Interest on buy-now-pay-later loans</li>
+                        <li><strong>FlexLine Interest Income:</strong> Interest on revolving credit lines</li>
+                    </ul>
+                    
+                    <h4>Additional Revenue Sources</h4>
+                    <ul>
+                        <li><strong>Initiation Fees:</strong> One-time fees for new credit account setup</li>
+                        <li><strong>Monthly Service Fees:</strong> Ongoing account maintenance fees</li>
+                        <li><strong>Merchant Commission:</strong> Revenue sharing with business partners</li>
+                        <li><strong>Penalty & Default Charges:</strong> Fees for late payments and defaults</li>
+                        <li><strong>Ancillary Revenue:</strong> Cross-selling and add-on product income</li>
+                    </ul>
+                    
+                    <h4>Cost Structure</h4>
+                    <p><strong>Operational Costs:</strong> Core business operations and infrastructure.</p>
+                    <ul>
+                        <li><strong>Technology & Platform:</strong> SaaS subscriptions, hosting, security, and enhancements</li>
+                        <li><strong>Staff & Administration:</strong> Salaries, benefits, and operational support</li>
+                        <li><strong>Office & Infrastructure:</strong> Rent, utilities, IT supplies, and equipment</li>
+                    </ul>
+                    
+                    <h4>Credit-Specific Costs</h4>
+                    <ul>
+                        <li><strong>Cost of Capital:</strong> Interest on funding used to provide credit</li>
+                        <li><strong>Credit Losses:</strong> Write-offs and provisions for bad debt</li>
+                        <li><strong>Insurance Costs:</strong> Credit insurance premiums and coverage</li>
+                        <li><strong>Collections & Recovery:</strong> Legal fees, recovery agents, and debt collection</li>
+                    </ul>
+                    
+                    <h4>Business Development Costs</h4>
+                    <ul>
+                        <li><strong>Marketing & Acquisition:</strong> Customer acquisition campaigns and promotions</li>
+                        <li><strong>Compliance & Regulatory:</strong> Regulatory reporting, audits, and compliance</li>
+                        <li><strong>Variable Costs:</strong> API queries, scoring, bureau checks, and notifications</li>
+                    </ul>
+                    
+                    <h4>Revenue Calculation Example</h4>
+                    <div class="calculation-example">
+                        <p><strong>Monthly Revenue Breakdown (Example for Month 6):</strong></p>
+                        <ul>
+                            <li><strong>Base Revenue:</strong> 115 transactions × R3,000 = R345,000</li>
+                            <li><strong>Initiation Fees:</strong> 23 new customers × R150 = R3,450</li>
+                            <li><strong>Service Fees:</strong> 92 existing customers × R25 = R2,300</li>
+                            <li><strong>Merchant Commission:</strong> R345,000 × 1.5% = R5,175</li>
+                            <li><strong>Interest Income:</strong> Credit transactions × rates × amounts</li>
+                            <li><strong>Penalty Charges:</strong> 115 × 8% × (R100 + R250) = R3,220</li>
+                            <li><strong>Total Revenue:</strong> R359,145</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <h4>Cost Calculation Example</h4>
+                    <div class="calculation-example">
+                        <p><strong>Monthly Cost Breakdown (Example for Month 6):</strong></p>
+                        <ul>
+                            <li><strong>Ongoing Costs:</strong> SaaS + Hosting = R8,000 + R3,000 = R11,000</li>
+                            <li><strong>Phase 2 Costs:</strong> Staff + Office + Variable = R45,000</li>
+                            <li><strong>Additional Costs:</strong> Insurance + Legal + Tech = R35,000</li>
+                            <li><strong>Cost of Capital:</strong> Based on outstanding credit × 12% annual rate</li>
+                            <li><strong>Credit Losses:</strong> Credit transactions × 3% loss rate</li>
+                            <li><strong>Total Costs:</strong> R91,000 + Variable + Capital + Losses</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="reference-section">
+                    <h3>🔧 How to Use This Model</h3>
+                    
+                    <h4>Step 1: Review Assumptions</h4>
+                    <p>Start by reviewing all assumptions in the Assumptions Hub tab. Understand what each metric represents and how it impacts your business model.</p>
+                    
+                    <h4>Step 2: Adjust Parameters</h4>
+                    <p>Modify assumptions based on your specific business plan, market research, and risk tolerance. Use the tooltips (ℹ️) for guidance.</p>
+                    
+                    <h4>Step 3: Update Model</h4>
+                    <p>Click "Update Model" to recalculate all projections based on your new assumptions.</p>
+                    
+                    <h4>Step 4: Analyze Results</h4>
+                    <p>Review the 24-Month Model tab to see detailed month-by-month projections. Check the Dashboard for key performance indicators.</p>
+                    
+                    <h4>Step 5: Scenario Planning</h4>
+                    <p>Use the Scenarios tab to test different business strategies and see their financial impact.</p>
+                    
+                    <h4>Step 6: Iterate and Refine</h4>
+                    <p>Adjust assumptions based on results and iterate until you have a realistic and achievable business plan.</p>
+                </div>
+
+                <div class="reference-section">
+                    <h3>📋 Key Business Assumptions</h3>
+                    
+                    <h4>Market Conditions</h4>
+                    <ul>
+                        <li>South African fintech market with NCR regulatory compliance</li>
+                        <li>Growing digital adoption and mobile payment trends</li>
+                        <li>Competitive landscape with traditional banks and fintech startups</li>
+                        <li>Regulatory environment supporting responsible lending practices</li>
+                    </ul>
+                    
+                    <h4>Operational Assumptions</h4>
+                    <ul>
+                        <li>Phased approach to business development and scaling</li>
+                        <li>Technology-first approach with white-label platform</li>
+                        <li>Risk-based pricing and credit assessment</li>
+                        <li>Customer-centric service model with digital channels</li>
+                    </ul>
+                    
+                    <h4>Financial Assumptions</h4>
+                    <ul>
+                        <li>Conservative growth projections with realistic market penetration</li>
+                        <li>Balanced product mix to manage risk and optimize revenue</li>
+                        <li>Efficient operational scaling with automation and process improvement</li>
+                        <li>Strong focus on credit quality and risk management</li>
+                    </ul>
+                </div>
+
+                <div class="reference-section">
+                    <h3>🚨 Important Notes & Disclaimers</h3>
+                    
+                    <h4>Model Limitations</h4>
+                    <ul>
+                        <li>This model is a planning tool and should not be considered as financial advice</li>
+                        <li>Actual results may vary significantly from projections</li>
+                        <li>Market conditions and regulatory changes may impact assumptions</li>
+                        <li>Regular review and updates of assumptions are recommended</li>
+                    </ul>
+                    
+                    <h4>Regulatory Compliance</h4>
+                    <ul>
+                        <li>All assumptions must comply with NCR and other financial regulations</li>
+                        <li>Interest rates and fees must be within regulatory limits</li>
+                        <li>Compliance costs and requirements may change over time</li>
+                        <li>Legal review of business model and assumptions is recommended</li>
+                    </ul>
+                    
+                    <h4>Risk Considerations</h4>
+                    <ul>
+                        <li>Fintech lending involves significant credit and operational risks</li>
+                        <li>Market competition and technology changes may impact assumptions</li>
+                        <li>Economic conditions may affect customer behavior and default rates</li>
+                        <li>Capital requirements may be higher than projected</li>
                     </ul>
                 </div>
             </div>
